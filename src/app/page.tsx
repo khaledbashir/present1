@@ -12,7 +12,7 @@ import PreFlightChecklist from '@/components/PreFlightChecklist';
 import SlideNotesEditor from '@/components/SlideNotesEditor';
 import { useKeyboardNav } from '@/hooks/useKeyboardNav';
 import { useSyncSlide } from '@/hooks/useSyncSlide';
-import slidesData from '@/data/slides.json';
+import ancDemoData from '@/data/anc-demo.json';
 
 const initialEmbeds: EmbedEntry[] = [
   {
@@ -32,7 +32,7 @@ const initialEmbeds: EmbedEntry[] = [
 ];
 
 export default function Home() {
-  const deck = slidesData as DeckConfig;
+  const deck = ancDemoData as unknown as DeckConfig;
   const [currentSlide, setCurrentSlide] = useSyncSlide(0);
   const [showUI, setShowUI] = useState(true);
 

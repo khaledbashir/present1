@@ -1,10 +1,15 @@
-export type SlideType = 'iframe' | 'content' | 'split' | 'dashboard';
+export type SlideType = 'iframe' | 'content' | 'split' | 'dashboard' | 'title-card';
 
 export interface BaseSlide {
   id: string;
   type: SlideType;
   title: string;
   notes?: string;
+}
+
+export interface TitleCardSlide extends BaseSlide {
+  type: 'title-card';
+  subtitle?: string;
 }
 
 export interface IFrameSlide extends BaseSlide {
@@ -29,8 +34,8 @@ export interface DashboardCard {
   title: string;
   description?: string;
   icon?: string;
-  targetSlideIndex: number; // The index of the slide this card links to
-  isMain?: boolean; // If true, this card is rendered larger
+  targetSlideIndex: number;
+  isMain?: boolean;
 }
 
 export interface DashboardSlide extends BaseSlide {
@@ -38,7 +43,7 @@ export interface DashboardSlide extends BaseSlide {
   cards: DashboardCard[];
 }
 
-export type Slide = IFrameSlide | ContentSlide | SplitSlide | DashboardSlide;
+export type Slide = TitleCardSlide | IFrameSlide | ContentSlide | SplitSlide | DashboardSlide;
 
 export interface DeckConfig {
   name: string;

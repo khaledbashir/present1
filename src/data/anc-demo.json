@@ -1,0 +1,34 @@
+{
+    "name": "ANC PROPOSAL ENGINE",
+    "author": "Ahmad Basheer | Forge Engine",
+    "slides": [
+        {
+            "id": "intro",
+            "type": "title-card",
+            "title": "Platform Review & Next Steps",
+            "subtitle": "February 21, 2026",
+            "notes": "<h2>AGENDA</h2><ul><li><strong>Phase 1:</strong> Excel → Pretty PDF (Mirror Mode) - 95% complete. Natalia testing all layouts this week.</li><li><strong>Phase 2:</strong> RFP Intelligence & Automation - New functionality! Natalia wants to pitch this tomorrow.</li><li><em>(TBD)</em> Checklist Estimator - Blocked. Matt/Jeremy haven't delivered the decision tree.</li></ul><p><strong>⚠️ KEY SHIFT:</strong> The checklist estimator got deprioritized because Matt/Jeremy are slow-rolling. Natalia wants the RFP Intelligence tool as the next phase. Roll with it.</p>"
+        },
+        {
+            "id": "phase-1-demo",
+            "type": "iframe",
+            "title": "Phase 1: Platform Demo",
+            "url": "https://proposal-engine-demo-url.vercel.app",
+            "notes": "<h3>AGENDA SECTION 1: Platform Demo (20 min)</h3><h4>What to Show</h4><ul><li><strong>Login & Dashboard</strong> — Show the executive dashboard, project history, activity log</li><li><strong>Excel-to-PDF Workflow</strong> — Upload an Excel → pick document type (Budget/Proposal/LOI) → Preview → Download</li><li><strong>Budget Test</strong> — Let the team upload a file live and test it together</li></ul><h4>Talking Points</h4><ul><li>Phase 1 was scoped as 'Excel to Pretty PDF' and that's what we delivered</li><li>Three document types working: Budget Estimate, Sales Quotation, Letter of Intent</li><li>All branding, specs tables, Exhibit A, Exhibit B, payment terms, signature blocks — all automated</li><li>Natalia has been testing and providing feedback; we've been iterating in real-time</li><li>The platform has RBAC (role-based access) — different users see different features based on their role</li></ul><h4>Known Issues to Address Proactively</h4><ul><li><strong>'Page 8 of 7' bug</strong> — Acknowledge it, say it's a pagination fix in progress</li><li><strong>Conditional UI</strong> — Some Intelligence Mode features still visible in Mirror Mode. On the fix list.</li><li><strong>One-off Excel formats</strong> (Moody Center style) — Deferred, acknowledged as future work</li></ul><h4>Outstanding Action Items FROM ANC Team (call these out)</h4><ul><li>Matt/Jeremy: Decision tree for the checklist estimator — still waiting</li><li>Natalia: Finishing layout testing across all document types</li><li>Team: Any edge-case Excel files that break the parser</li></ul>"
+        },
+        {
+            "id": "phase-2-proposal",
+            "type": "iframe",
+            "title": "Phase 2: RFP Intelligence",
+            "url": "https://unionagain-intelligence-demo-url.vercel.app",
+            "notes": "<h3>AGENDA SECTION 2: Phase 2 Proposal (15 min)</h3><h4>The Setup (Use the unionagain demo as your opener)</h4><p>Last night you 'accidentally' ran one of Natalia's proposals through an AI intelligence tool. It found:</p><ul><li>COVID-era language that needs to be removed from boilerplate</li><li>Electrical pricing that may be above market rate</li><li>Full competitive analysis against Daktronics, SNA Displays, Samsung</li><li>Client research on unionagain / Union Station</li></ul><p>Natalia's reaction: <em>'oh thats very cool... yes covid language has to go... ill look into electrical... thank you for sharing!'</em></p><p>She then said: <strong>'I would bring that up tomorrow as phase 2 for sure. Bring this example as what the report will look like.'</strong></p><h4>Pricing to Present</h4><ul><li><strong>Total Development:</strong> $4,500</li><li><strong>AI Processing Costs (pass-through, not your fee):</strong> ~$100-300/month usage-based</li><li><strong>Timeline:</strong> 3 weeks</li></ul><h4>The 'What This Replaces' Pitch</h4><p>Senior estimator reads 500-page RFP manually (8-12 hours) ➡️ System extracts all screens in 15 minutes.<br>Estimator manually searches product catalog per screen (2 hours) ➡️ Auto-matched in seconds.</p>"
+        },
+        {
+            "id": "working-session",
+            "type": "title-card",
+            "title": "Working Session",
+            "subtitle": "Jeremy, Matt, Jack, Eric, Jireh",
+            "notes": "<h3>AGENDA SECTION 3: Working Session</h3><h4>Your Role Here</h4><p>This is THEIR session to brainstorm, but you should steer the conversation toward:</p><ol><li><strong>The Main Pain Point</strong> — the manual typing cycle. 'Type LED screens from PDF/Word into Excel → make Excel for manufacturer → make Excel for electrician → type back received info.' Get the estimators to confirm and expand on this pain.</li><li><strong>Priority Features</strong> — Let them rank what matters most. Use this to lock in Phase 2 scope.</li><li><strong>Data Collection Commitments</strong> — Get verbal commitments (with dates) for:<br>- Matt will deliver the decision tree<br>- Jeremy can provide sample RFPs<br>- Eric can share the product catalog<br>- Jireh can pull the 20 Excel examples</li></ol><h4>Questions to Ask the Room</h4><ul><li>'What's the single task that takes you the most time on every project?'</li><li>'If you could automate one thing tomorrow, what would it be?'</li><li>'How many RFPs are you processing per month right now?'</li><li>'What does the ideal output look like when you send specs to LG or the electrician?'</li></ul>"
+        }
+    ]
+}

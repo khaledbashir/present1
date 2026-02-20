@@ -169,6 +169,7 @@ export default function Home() {
               </div>
               <div className="rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden shadow-lg">
                 <SlideNotesEditor
+                  key={slide.id}
                   content={`<p>${slide.notes || 'No notes currently written for this feature...'}</p>`}
                   onChange={(val) => {
                     // Local editor state persists

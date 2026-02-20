@@ -128,17 +128,20 @@ export default function Home() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* 1. Left Sidebar (Profiles & Pre-Flight) */}
-        <div className="flex w-[320px] shrink-0 flex-col gap-6 overflow-y-auto border-r border-slate-200 bg-slate-50 p-6 z-10 custom-scrollbar">
-          <ProfileManager />
-          <ClientProfileManager />
-          <PreFlightChecklist />
-        </div>
+        {showLeftSidebar && (
+          <div className="flex w-[320px] shrink-0 flex-col gap-6 overflow-y-auto border-r border-slate-800 bg-slate-950 p-6 z-10 custom-scrollbar transition-all">
+            <FeaturePlaylist slides={deck.slides} currentIndex={currentSlide} onSelect={goTo} />
+            <div className="h-px w-full bg-slate-800 my-2" />
+            <ProfileManager />
+            <PreFlightChecklist />
+          </div>
+        )}
 
         {/* 2. Center Stage (Slides & Tools) */}
-        <div className="flex flex-1 flex-col overflow-y-auto relative custom-scrollbar">
-          <div className="mx-auto w-full max-w-5xl flex-1 px-8 py-8 flex flex-col gap-8">
+        <div className="flex flex-1 flex-col overflow-y-auto relative custom-scrollbar bg-slate-900">
+          <div className="mx-auto w-full max-w-6xl flex-1 px-8 py-8 flex flex-col gap-8 transition-all">
             {/* Presentation Viewport */}
-            <div className="relative w-full shrink-0 overflow-hidden rounded-2xl border border-slate-300 bg-slate-900 shadow-xl group">
+            <div className="relative w-full shrink-0 overflow-hidden rounded-2xl border border-slate-700 bg-black shadow-2xl group">
               <div className="relative aspect-[16/9] w-full bg-black">
                 <div className="absolute inset-0">
                   <SlideRenderer slide={slide} isActive onNavigate={goTo} />
@@ -161,15 +164,17 @@ export default function Home() {
             {/* Active Slide Notes Editor */}
             <div className="shrink-0 flex flex-col gap-3">
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 ml-1">Live Demo Notes</h3>
-                <p className="text-xs text-slate-400 ml-1 mt-0.5">Edit context for this slide on the fly.</p>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400 ml-1">Live Demo Notes</h3>
+                <p className="text-xs text-slate-500 ml-1 mt-0.5">Edit context for this slide on the fly.</p>
               </div>
-              <SlideNotesEditor
-                content={`<p>${slide.notes || 'No notes currently written for this slide...'}</p>`}
-                onChange={(val) => {
-                  // Local editor state persists
-                }}
-              />
+              <div className="rounded-2xl border border-slate-800 bg-slate-950 overflow-hidden shadow-lg">
+                <SlideNotesEditor
+                  content={`<p>${slide.notes || 'No notes currently written for this feature...'}</p>`}
+                  onChange={(val) => {
+                    // Local editor state persists
+                  }}
+                />
+              </div>
             </div>
 
             {/* Embed Collector Below Slide */}
@@ -180,11 +185,13 @@ export default function Home() {
         </div>
 
         {/* 3. Right Sidebar (AI Copilot Sliders/Tools) */}
-        <div className="flex w-[380px] shrink-0 flex-col border-l border-slate-200 bg-white shadow-xl shadow-slate-200/50 z-10">
-          <div className="h-full w-full">
-            <DemoCopilot currentSlideData={slide} />
+        {showRightSidebar && (
+          <div className="flex w-[380px] shrink-0 flex-col border-l border-slate-800 bg-slate-950 shadow-2xl shadow-black/50 z-10 transition-all">
+            <div className="h-full w-full">
+              <DemoCopilot currentSlideData={slide} />
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </div>

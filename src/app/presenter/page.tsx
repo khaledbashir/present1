@@ -6,10 +6,10 @@ import SlideRenderer from '@/components/SlideRenderer';
 import DemoCopilot from '@/components/DemoCopilot';
 import { useKeyboardNav } from '@/hooks/useKeyboardNav';
 import { useSyncSlide } from '@/hooks/useSyncSlide';
-import slidesData from '@/data/slides.json';
+import ancDemoData from '@/data/anc-demo.json';
 
 export default function PresenterView() {
-  const deck = slidesData as DeckConfig;
+  const deck = ancDemoData as unknown as DeckConfig;
   const [currentSlide, setCurrentSlide] = useSyncSlide(0);
   const [startTime] = useState(() => Date.now());
   const [elapsed, setElapsed] = useState(0);
@@ -46,7 +46,8 @@ export default function PresenterView() {
   const nextSlide = deck.slides[currentSlide + 1];
 
   return (
-    <div className="h-screen w-screen bg-zinc-950 flex">
+    <div className="h-screen w-screen bg-zinc-950 flex overflow-hidden">
+      {/* 1. Left Sidebar: Preview Canvas */}
       <div className="flex-1 flex flex-col border-r border-zinc-800">
         <div className="flex-1 p-4">
           <div className="h-full bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800">
@@ -74,7 +75,7 @@ export default function PresenterView() {
             <button
               onClick={goNext}
               disabled={currentSlide === totalSlides - 1}
-              className="px-3 py-1 text-sm bg-emerald-600 text-white rounded hover:bg-emerald-500 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-3 py-1 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-500 disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Next
             </button>
@@ -82,21 +83,22 @@ export default function PresenterView() {
         </div>
       </div>
 
-      <div className="w-80 flex flex-col bg-zinc-900">
+      {/* 2. Middle Sidebar: Notes and Navigation */}
+      <div className="w-80 shrink-0 flex flex-col bg-zinc-900 border-r border-zinc-800">
         <div className="p-4 border-b border-zinc-800">
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide">Current Slide</h2>
+          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide">Current Feature</h2>
           <p className="text-zinc-200 font-medium mt-1">{slide.title}</p>
         </div>
 
         <div className="flex-1 p-4 overflow-auto">
-          <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-2">Notes</h3>
+          <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-2">Playbook Notes</h3>
           <p className="text-zinc-400 text-sm whitespace-pre-wrap">
             {slide.notes || 'No notes for this slide.'}
           </p>
         </div>
 
         {nextSlide && (
-          <div className="p-4 border-t border-zinc-800">
+          <div className="p-4 border-t border-zinc-800 shrink-0">
             <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-2">Next Up</h3>
             <p className="text-zinc-300 text-sm">{nextSlide.title}</p>
             {nextSlide.notes && (
@@ -105,15 +107,15 @@ export default function PresenterView() {
           </div>
         )}
 
-        <div className="p-4 border-t border-zinc-800">
-          <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-2">Slide List</h3>
-          <div className="space-y-1 max-h-40 overflow-auto">
+        <div className="p-4 border-t border-zinc-800 shrink-0">
+          <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-wide mb-2">Feature List</h3>
+          <div className="space-y-1 max-h-40 overflow-auto custom-scrollbar">
             {deck.slides.map((s: Slide, i: number) => (
               <button
                 key={s.id}
                 onClick={() => goTo(i)}
-                className={`w-full text-left px-2 py-1 text-xs rounded transition-colors ${i === currentSlide
-                  ? 'bg-emerald-600/20 text-emerald-400'
+                className={`w-full text-left px-2 py-1.5 text-xs rounded transition-colors ${i === currentSlide
+                  ? 'bg-indigo-600/20 text-indigo-400'
                   : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
                   }`}
               >
@@ -124,7 +126,10 @@ export default function PresenterView() {
         </div>
       </div>
 
-      <DemoCopilot currentSlideData={slide} />
+      {/* 3. Right Sidebar: Demo Copilot */}
+      <div className="w-[380px] shrink-0 bg-white h-full flex flex-col shadow-xl">
+        <DemoCopilot currentSlideData={slide} />
+      </div>
     </div>
   );
 }

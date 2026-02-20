@@ -8,30 +8,26 @@ interface Props {
 }
 
 export default function IFrameSlide({ slide, isActive }: Props) {
-  const aspectClass = {
-    '16/9': 'aspect-video',
-    '4/3': 'aspect-[4/3]',
-    '1/1': 'aspect-square',
-    'full': 'h-full',
-  }[slide.aspectRatio || '16/9'];
-
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center p-8">
-      <h2 className="text-2xl font-bold text-zinc-200 mb-4">{slide.title}</h2>
-      <div className={`w-full max-w-6xl ${aspectClass} rounded-lg overflow-hidden border border-zinc-700 bg-zinc-900`}>
-        {isActive ? (
-          <iframe
-            src={slide.url}
-            className="w-full h-full"
-            title={slide.title}
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-zinc-500">
-            <span>Loading...</span>
+    <div className="w-full h-full relative bg-slate-900 overflow-hidden">
+      {isActive ? (
+        <iframe
+          src={slide.url}
+          className="absolute inset-0 w-full h-full border-0"
+          title={slide.title}
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        />
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center text-slate-500 bg-slate-900 bg-opacity-80 backdrop-blur-sm">
+          <div className="flex flex-col items-center gap-3">
+            <svg className="animate-spin h-8 w-8 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span className="text-sm font-medium tracking-wide">Loading Live Canvas...</span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

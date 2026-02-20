@@ -50,14 +50,14 @@ export default function DemoCopilot({ currentSlideData }: { currentSlideData?: S
 
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50">
                 {messages.length === 0 && (
-                    <div className="flex h-full flex-col items-center justify-center text-center space-y-3">
+                    <div className="flex flex-col items-center py-8 text-center space-y-3">
                         <div className="rounded-full bg-slate-100 p-4">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z" /><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" /><path d="M12 2v2" /><path d="M12 22v-2" /><path d="m17 20.66-1-1.73" /><path d="M11 5.07 10 3.34" /><path d="m20.66 17-1.73-1" /><path d="m3.34 10 1.731 1" /><path d="M14 12h8" /><path d="M2 12h2" /><path d="m20.66 7-1.73 1" /><path d="m3.34 14 1.73-1" /><path d="m17 3.34-1 1.73" /><path d="m11 18.93-1 1.73" /></svg>
                         </div>
                         <p className="text-sm text-slate-500">I'm your invisible assistant.<br />Ask me anything about the slide or the client during your demo.</p>
                     </div>
                 )}
-                {messages.map((m) => (
+                {messages.map((m: any) => (
                     <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`rounded-2xl px-4 py-2.5 max-w-[85%] text-sm ${m.role === 'user' ? 'bg-indigo-600 text-white rounded-br-sm' : 'bg-white border border-slate-200 text-slate-800 rounded-bl-sm shadow-sm'}`}>
                             <div className="prose prose-sm prose-slate" dangerouslySetInnerHTML={{ __html: m.role !== 'user' ? m.content.replace(/\n([^<])/g, '<br/>$1') : m.content }} />

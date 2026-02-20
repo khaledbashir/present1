@@ -10,6 +10,7 @@ import DemoCopilot from '@/components/DemoCopilot';
 import ProfileManager from '@/components/ProfileManager';
 import PreFlightChecklist from '@/components/PreFlightChecklist';
 import SlideNotesEditor from '@/components/SlideNotesEditor';
+import FeaturePlaylist from '@/components/FeaturePlaylist';
 import { useKeyboardNav } from '@/hooks/useKeyboardNav';
 import { useSyncSlide } from '@/hooks/useSyncSlide';
 import ancDemoData from '@/data/anc-demo.json';
@@ -35,6 +36,8 @@ export default function Home() {
   const deck = ancDemoData as unknown as DeckConfig;
   const [currentSlide, setCurrentSlide] = useSyncSlide(0);
   const [showUI, setShowUI] = useState(true);
+  const [showLeftSidebar, setShowLeftSidebar] = useState(true);
+  const [showRightSidebar, setShowRightSidebar] = useState(true);
 
   const totalSlides = deck.slides.length;
 
@@ -78,29 +81,47 @@ export default function Home() {
   const slide = deck.slides[currentSlide];
 
   return (
-    <div className="flex h-screen w-full flex-col bg-slate-100 text-slate-900 overflow-hidden font-sans">
+    <div className="flex h-screen w-full flex-col bg-slate-900 text-slate-100 overflow-hidden font-sans">
       {/* Header - Stays fixed at top */}
-      <header className="flex h-[72px] shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm z-20">
+      <header className="flex h-[72px] shrink-0 items-center justify-between border-b border-slate-800 bg-slate-950 px-6 shadow-sm z-20">
         <div className="flex items-center gap-6">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-500 mb-0.5 leading-none">Workspace</p>
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold text-slate-900 leading-none">{deck.name}</h1>
-              {deck.author && (
-                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-medium text-slate-600">
-                  By {deck.author}
-                </span>
-              )}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowLeftSidebar(!showLeftSidebar)}
+              className={`rounded-lg p-2 transition-colors ${showLeftSidebar ? 'bg-indigo-600/20 text-indigo-400' : 'text-slate-400 hover:bg-slate-800'}`}
+              title="Toggle Feature Playlist"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M9 3v18" /></svg>
+            </button>
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-400 mb-0.5 leading-none">Workspace</p>
+              <div className="flex items-center gap-3">
+                <h1 className="text-xl font-bold text-white leading-none">{deck.name}</h1>
+                {deck.author && (
+                  <span className="rounded-full bg-slate-800 px-2.5 py-0.5 text-[10px] font-medium text-slate-300">
+                    By {deck.author}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>
-        <button
-          onClick={openPresenter}
-          className="flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-slate-800 hover:shadow-lg focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
-          Open Presenter View
-        </button>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={openPresenter}
+            className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-indigo-500 hover:shadow-lg focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+            Open Presenter View
+          </button>
+          <button
+            onClick={() => setShowRightSidebar(!showRightSidebar)}
+            className={`rounded-lg p-2 transition-colors ${showRightSidebar ? 'bg-indigo-600/20 text-indigo-400' : 'text-slate-400 hover:bg-slate-800'}`}
+            title="Toggle AI Copilot"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M15 3v18" /></svg>
+          </button>
+        </div>
       </header>
 
       {/* Main Content Area - 3 Rigid Panes */}

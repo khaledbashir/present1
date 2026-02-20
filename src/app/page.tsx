@@ -9,6 +9,7 @@ import ClientProfileManager from '@/components/ClientProfileManager';
 import DemoCopilot from '@/components/DemoCopilot';
 import ProfileManager from '@/components/ProfileManager';
 import PreFlightChecklist from '@/components/PreFlightChecklist';
+import SlideNotesEditor from '@/components/SlideNotesEditor';
 import { useKeyboardNav } from '@/hooks/useKeyboardNav';
 import { useSyncSlide } from '@/hooks/useSyncSlide';
 import slidesData from '@/data/slides.json';
@@ -77,59 +78,93 @@ export default function Home() {
   const slide = deck.slides[currentSlide];
 
   return (
-    <div className="min-h-screen w-full bg-slate-50 text-slate-900">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-10">
-        <section className="space-y-6">
-          <header className="flex flex-col gap-3 rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-lg shadow-black/5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-[0.4em] text-slate-500">Workspace</p>
-              <h1 className="text-3xl font-semibold text-slate-900 sm:text-4xl">{deck.name}</h1>
+    <div className="flex h-screen w-full flex-col bg-slate-100 text-slate-900 overflow-hidden font-sans">
+      {/* Header - Stays fixed at top */}
+      <header className="flex h-[72px] shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm z-20">
+        <div className="flex items-center gap-6">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-indigo-500 mb-0.5 leading-none">Workspace</p>
+            <div className="flex items-center gap-3">
+              <h1 className="text-xl font-bold text-slate-900 leading-none">{deck.name}</h1>
               {deck.author && (
-                <p className="text-xs uppercase tracking-[0.4em] text-slate-500">By {deck.author}</p>
+                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[10px] font-medium text-slate-600">
+                  By {deck.author}
+                </span>
               )}
             </div>
-            <button
-              onClick={openPresenter}
-              className="flex items-center gap-2 rounded-full border border-slate-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-700 transition hover:border-slate-400 hover:text-slate-900"
-            >
-              Presenter view
-            </button>
-          </header>
+          </div>
+        </div>
+        <button
+          onClick={openPresenter}
+          className="flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-md transition hover:bg-slate-800 hover:shadow-lg focus:ring-2 focus:ring-slate-900 focus:ring-offset-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>
+          Open Presenter View
+        </button>
+      </header>
 
-          <div className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-black/10">
-            <div className="relative w-full overflow-hidden rounded-[24px] border border-slate-200 bg-slate-950/90 p-5">
-              <div className="relative aspect-[16/9] w-full">
+      {/* Main Content Area - 3 Rigid Panes */}
+      <div className="flex flex-1 overflow-hidden">
+
+        {/* 1. Left Sidebar (Profiles & Pre-Flight) */}
+        <div className="flex w-[320px] shrink-0 flex-col gap-6 overflow-y-auto border-r border-slate-200 bg-slate-50 p-6 z-10 custom-scrollbar">
+          <ProfileManager />
+          <ClientProfileManager />
+          <PreFlightChecklist />
+        </div>
+
+        {/* 2. Center Stage (Slides & Tools) */}
+        <div className="flex flex-1 flex-col overflow-y-auto relative custom-scrollbar">
+          <div className="mx-auto w-full max-w-5xl flex-1 px-8 py-8 flex flex-col gap-8">
+            {/* Presentation Viewport */}
+            <div className="relative w-full shrink-0 overflow-hidden rounded-2xl border border-slate-300 bg-slate-900 shadow-xl group">
+              <div className="relative aspect-[16/9] w-full bg-black">
                 <div className="absolute inset-0">
                   <SlideRenderer slide={slide} isActive onNavigate={goTo} />
                 </div>
               </div>
-              <div className="mt-4">{deck.author ? <p className="text-xs text-slate-400">{deck.author}</p> : null}</div>
+
+              {/* Controls Overlay */}
+              <div className="absolute bottom-4 left-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <SlideControls
+                  currentSlide={currentSlide}
+                  totalSlides={totalSlides}
+                  onPrev={goPrev}
+                  onNext={goNext}
+                  onGoTo={goTo}
+                  className="mx-auto max-w-2xl px-4"
+                />
+              </div>
             </div>
-            <div className={`transition-opacity duration-300 ${showUI ? 'opacity-100' : 'opacity-0'}`}>
-              <SlideControls
-                currentSlide={currentSlide}
-                totalSlides={totalSlides}
-                onPrev={goPrev}
-                onNext={goNext}
-                onGoTo={goTo}
-                className="mx-auto max-w-3xl"
+
+            {/* Active Slide Notes Editor */}
+            <div className="shrink-0 flex flex-col gap-3">
+              <div>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 ml-1">Live Demo Notes</h3>
+                <p className="text-xs text-slate-400 ml-1 mt-0.5">Edit context for this slide on the fly.</p>
+              </div>
+              <SlideNotesEditor
+                content={`<p>${slide.notes || 'No notes currently written for this slide...'}</p>`}
+                onChange={(val) => {
+                  // Local editor state persists
+                }}
               />
             </div>
-          </div>
-        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <div className="md:col-span-4 flex flex-col gap-6">
-            <ProfileManager />
-            <ClientProfileManager />
-            <PreFlightChecklist />
-          </div>
-          <div className="md:col-span-8">
-            <EmbedCollector initialEntries={initialEmbeds} />
+            {/* Embed Collector Below Slide */}
+            <div className="shrink-0 pb-12">
+              <EmbedCollector initialEntries={initialEmbeds} />
+            </div>
           </div>
         </div>
 
-        <DemoCopilot currentSlideData={slide} />
+        {/* 3. Right Sidebar (AI Copilot Sliders/Tools) */}
+        <div className="flex w-[380px] shrink-0 flex-col border-l border-slate-200 bg-white shadow-xl shadow-slate-200/50 z-10">
+          <div className="h-full w-full">
+            <DemoCopilot currentSlideData={slide} />
+          </div>
+        </div>
+
       </div>
     </div>
   );

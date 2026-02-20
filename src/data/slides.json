@@ -1,0 +1,69 @@
+{
+  "name": "Demo Presentation",
+  "author": "Your Name",
+  "slides": [
+    {
+      "id": "welcome",
+      "type": "content",
+      "title": "Welcome",
+      "content": "# Welcome to SlideDeck\n\nPress **Arrow Keys** or **Space** to navigate\n\n- Built with Next.js\n- Embed any website\n- Dark mode by default",
+      "notes": "Welcome everyone to this demo. Show off the clean design."
+    },
+    {
+      "id": "project-hub",
+      "type": "dashboard",
+      "title": "Project Hub",
+      "notes": "Stop here and ask the client what they want to see first.",
+      "cards": [
+        {
+          "title": "Live Website Demo",
+          "description": "See the fully functional website embedded directly in the slide without leaving the presentation.",
+          "icon": "🌐",
+          "isMain": true,
+          "targetSlideIndex": 2
+        },
+        {
+          "title": "Key Features",
+          "description": "Review the core platform capabilities.",
+          "icon": "✨",
+          "targetSlideIndex": 3
+        },
+        {
+          "title": "Technical Specs",
+          "description": "Deep dive into the architecture.",
+          "icon": "⚙️",
+          "targetSlideIndex": 4
+        }
+      ]
+    },
+    {
+      "id": "embedded-site",
+      "type": "iframe",
+      "title": "Live Website Embed",
+      "url": "https://example.com",
+      "aspectRatio": "16/9",
+      "notes": "Here's a live website embedded directly in the slide."
+    },
+    {
+      "id": "features",
+      "type": "content",
+      "title": "Features",
+      "content": "## Key Features\n\n- **IFrame Slides** - Embed any URL\n- **Content Slides** - Markdown support\n- **Split View** - Side by side\n- **Presenter Mode** - /presenter\n- **Keyboard Nav** - Fast navigation",
+      "notes": "Walk through each feature"
+    },
+    {
+      "id": "github-embed",
+      "type": "iframe",
+      "title": "GitHub Profile",
+      "url": "https://github.com",
+      "notes": "Show off your GitHub or project repos"
+    },
+    {
+      "id": "closing",
+      "type": "content",
+      "title": "Thank You",
+      "content": "# Questions?\n\n---\n\nEdit `src/data/slides.json` to customize\n\nPress `P` to open presenter view",
+      "notes": "Open for questions"
+    }
+  ]
+}
